@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
 
-public interface HotelBookingRepository extends JpaRepository<HotelBooking,Long> {
+public interface HotelBookingRepository extends JpaRepository<HotelBooking, Long> {
     @Transactional
     @Modifying
     @Query(value = "DELETE FROM hotel_booking WHERE booking_id = :bookingId", nativeQuery = true)

@@ -4,7 +4,6 @@ import MVP.Hotel.Booking.Hotel.Booking.Entities.HotelBooking;
 import MVP.Hotel.Booking.Hotel.Booking.Exception.HotelNotFoundException;
 import MVP.Hotel.Booking.Hotel.Booking.Repository.HotelBookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -26,9 +25,11 @@ public class HotelBookingServiceImpl {
         return hotelBookingRepository.findAll();
     }
 
-    public void CancelBooking(Long bookingId) { hotelBookingRepository.deleteBooking(bookingId);}
+    public void CancelBooking(Long bookingId) {
+        hotelBookingRepository.deleteBooking(bookingId);
+    }
 
-    @Cacheable(cacheNames = "myCache", key = "#id")
+
     public HotelBooking getBookingDetailsById(Long id) {
         return hotelBookingRepository.findById(id)
                 .orElseThrow(() -> new HotelNotFoundException("Hotel not found with ID: " + id));

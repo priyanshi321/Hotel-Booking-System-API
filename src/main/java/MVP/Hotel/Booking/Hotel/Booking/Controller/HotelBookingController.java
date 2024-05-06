@@ -1,6 +1,7 @@
 package MVP.Hotel.Booking.Hotel.Booking.Controller;
 
 import MVP.Hotel.Booking.Hotel.Booking.Entities.HotelBooking;
+import MVP.Hotel.Booking.Hotel.Booking.Exception.HotelNotFoundException;
 import MVP.Hotel.Booking.Hotel.Booking.service.HotelBookingServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,10 +11,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RestControllerAdvice
 @RequestMapping("/bookings")
 public class HotelBookingController {
     @Autowired
     private HotelBookingServiceImpl bookingService;
+
+    @ExceptionHandler(HotelNotFoundException.class)
+    public ResponseEntity<String> handleHotelNotFoundException(HotelNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
 
     @PostMapping
     public ResponseEntity<HotelBooking> createBooking(@RequestBody HotelBooking booking) {
@@ -26,6 +33,7 @@ public class HotelBookingController {
         List<HotelBooking> bookings = bookingService.getAllBookings();
         return ResponseEntity.ok(bookings);
     }
+
     @GetMapping("/{BookingId}")
     public ResponseEntity<HotelBooking> getBookingDetailsById(@PathVariable Long BookingId) {
 
@@ -33,9 +41,10 @@ public class HotelBookingController {
         if (hotel != null) {
             return ResponseEntity.ok(hotel);
         } else {
-             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
     @DeleteMapping("/{BookingId}")
     public ResponseEntity<String> CancelBooking(@PathVariable Long BookingId) {
         bookingService.CancelBooking(BookingId);
