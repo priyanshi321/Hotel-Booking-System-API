@@ -35,3 +35,7 @@ Services
 The HotelBookingService interface defines methods for managing hotel bookings, including saving, retrieving, canceling, updating, and getting details of a booking by ID.
 
 The HotelBookingServiceImpl class implements the HotelBookingService interface. It provides implementations for the defined methods using the HotelBookingRepository. 
+
+Optimizations used :
+1.Input Validation: Added input validation to HotelBooking to ensure that the data provided in the request bodies is valid. For example, check for null or empty values, validate email addresses, phone numbers, etc.
+2.Error Handling:used error handling by providing more informative error messages and handling more types of exceptions.
