@@ -6,12 +6,15 @@ import MVP.Hotel.Booking.Hotel.Booking.service.HotelBookingServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RestControllerAdvice
+@Validated
 @RequestMapping("/bookings")
 public class HotelBookingController {
     @Autowired
@@ -23,7 +26,7 @@ public class HotelBookingController {
     }
 
     @PostMapping
-    public ResponseEntity<HotelBooking> createBooking(@RequestBody HotelBooking booking) {
+    public ResponseEntity<HotelBooking> createBooking(@Valid @RequestBody HotelBooking booking) {
         HotelBooking createdBooking = bookingService.saveBooking(booking);
         return ResponseEntity.ok(createdBooking);
     }
@@ -52,7 +55,7 @@ public class HotelBookingController {
     }
 
     @PutMapping("/{Bookingid}")
-    public ResponseEntity<HotelBooking> updateBooking(@PathVariable Long Bookingid, @RequestBody HotelBooking updatedBooking) {
+    public ResponseEntity<HotelBooking> updateBooking(@PathVariable Long Bookingid, @Valid @RequestBody HotelBooking updatedBooking) {
         HotelBooking booking = bookingService.updateBooking(Bookingid, updatedBooking);
         return ResponseEntity.ok(booking);
     }

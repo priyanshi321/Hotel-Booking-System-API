@@ -1,8 +1,12 @@
 package MVP.Hotel.Booking.Hotel.Booking.Entities;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
 
 @Entity
 @Table(name = "Hotel_Reservations")
@@ -13,18 +17,33 @@ public class HotelBooking {
     private Long bookingId;
     @Column(name = "Name")
     private String username;
+    @NotBlank(message = "Username is required")
     @Column(name = "PhoneNumber")
     private String phoneNumber;
+    @NotBlank(message = "Phone number is required")
+    @Pattern(regexp="^\\+(?:[0-9] ?){6,14}[0-9]$", message="Please provide a valid phone number")
     @Column(name = "emailId")
+    @NotBlank(message = "Email is required")
+    @Email(message = "Please provide a valid email address")
     private String emailId;
     @Column(name = "HotelId")
     private Long hotelId;
     @Column(name = "RoomType")
     private String roomType;
-    @Column(name = "bookingTimeStamp")
+    @Column(name = "booking_timestamp", updatable = false)
+    @CreationTimestamp
     private LocalDateTime bookingTimestamp;
     @Column(name = "NumberOfGuest")
+    @Min(value = 1, message = "Number of guests must be at least 1")
     private int numberOfGuests;
+    @NotNull(message = "Check-in date is required")
+    @FutureOrPresent(message = "Check-in date must be in the present or future")
+    @Column(name = "checkInDate")
+    private LocalDate checkInDate;
+    @NotNull(message = "Check-out date is required")
+    @Future(message = "Check-out date must be in the future")
+    @Column(name = "checkOutDate")
+    private LocalDate checkOutDate;
 
     @Override
     public String toString() {
@@ -41,9 +60,6 @@ public class HotelBooking {
                 ", checkOutDate=" + checkOutDate +
                 '}';
     }
-
-    @Column(name = "checkInDate")
-    private LocalDate checkInDate;
 
     public Long getBookingId() {
         return bookingId;
@@ -125,7 +141,5 @@ public class HotelBooking {
         this.checkOutDate = checkOutDate;
     }
 
-    @Column(name = "checkOutDate")
-    private LocalDate checkOutDate;
 
 }

@@ -17,7 +17,6 @@ public class HotelBookingServiceImpl {
 
 
     public HotelBooking saveBooking(HotelBooking booking) {
-        booking.setBookingTimestamp(LocalDateTime.now());
         return hotelBookingRepository.save(booking);
     }
 
