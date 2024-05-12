@@ -6,11 +6,12 @@ import MVP.Hotel.Booking.Hotel.Booking.Repository.HotelBookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.annotation.Annotation;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class HotelBookingServiceImpl {
+public class HotelBookingServiceImpl implements HotelBookingService {
 
     @Autowired
     private HotelBookingRepository hotelBookingRepository;
@@ -45,5 +46,8 @@ public class HotelBookingServiceImpl {
 
         return hotelBookingRepository.save(existingBooking);
     }
+
+
+
 }
 

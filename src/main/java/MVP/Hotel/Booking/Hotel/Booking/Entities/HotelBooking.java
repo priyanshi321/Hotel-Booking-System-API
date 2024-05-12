@@ -13,18 +13,18 @@ import java.time.LocalDateTime;
 public class HotelBooking {
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookingId;
     @Column(name = "Name")
-    private String username;
     @NotBlank(message = "Username is required")
+    private String username;
     @Column(name = "PhoneNumber")
-    private String phoneNumber;
     @NotBlank(message = "Phone number is required")
     @Pattern(regexp="^\\+(?:[0-9] ?){6,14}[0-9]$", message="Please provide a valid phone number")
-    @Column(name = "emailId")
+    private String phoneNumber;
     @NotBlank(message = "Email is required")
     @Email(message = "Please provide a valid email address")
+    @Column(name = "emailId")
     private String emailId;
     @Column(name = "HotelId")
     private Long hotelId;

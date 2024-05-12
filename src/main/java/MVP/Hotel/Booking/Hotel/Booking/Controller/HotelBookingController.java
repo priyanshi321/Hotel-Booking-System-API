@@ -44,9 +44,11 @@ public class HotelBookingController {
         if (hotel != null) {
             return ResponseEntity.ok(hotel);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            throw new HotelNotFoundException("Hotel booking not found with ID: " + BookingId);
         }
     }
+
+
 
     @DeleteMapping("/{BookingId}")
     public ResponseEntity<String> CancelBooking(@PathVariable Long BookingId) {
